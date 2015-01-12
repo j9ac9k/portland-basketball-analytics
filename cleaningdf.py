@@ -99,7 +99,7 @@ df = df.dropna()
 df = df.drop_duplicates()
 
 # No need for the difference column
-df = df.drop('Diff', 1)
+#df = df.drop('Diff', 1)
 
 # removing entries with meaningless data
 df = df[~df['Week'].str.contains('week')]
@@ -158,5 +158,8 @@ print('After removing duplicate entries with 1 bad date entry: ' + str(len(df[wr
 
 
 df['Date'] = pd.to_datetime(df['Date'])
+
+
+
 
 df.to_pickle('cleanerdf.pkl')

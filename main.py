@@ -2,9 +2,9 @@
 __author__ = "ogi"
 
 import pandas as pd
-import matplotlib as mlab
+#import matplotlib as mlab
 import matplotlib.pyplot as plt
-from matplotlib.dates import date2num
+#from matplotlib.dates import date2num
 import seaborn as sns
 
 plt.close('all')
@@ -16,73 +16,60 @@ sns.set_context(rc={"figure.figsize": (8, 4)})
 df = pd.read_pickle('cleanerdf.pkl')
 
 
-team = 'Rogue'
+team = 'Nobody'
 teamdf = df[df.Team == team]
 teamdf = teamdf.set_index('Date')
 
-fig1 = plt.figure()
+
+
+#Plain Histogram
+plt.figure('plainHistogram')
+ax1 = plt.subplot(211, title=team + ' Points For')
+plt.hist(teamdf.Pts4)
+
+ax2 = plt.subplot(212, title=team + ' Points Against')
+plt.hist(teamdf.PtsAg)
+
+
+#Pandas KDE Plot
+plt.figure(num='Pandas KDE Plot')
 ax1 = plt.subplot(2,1,1, title=team + ' Points For Histogram')
-teamdf.Pts4.plot(kind='hist', alpha=0.5, normed=True)
+teamdf.Pts4.plot(kind='kde', alpha=0.5)
 
 ax2 = plt.subplot(2,1,2, title=team + ' Points Against Histogram', sharex=ax1)
-teamdf.PtsAg.plot(kind='hist', alpha=0.5, normed=True)
+teamdf.PtsAg.plot(kind='kde', alpha=0.5)
 plt.show()
 
 
 
+#Pandas Moving Average Plot
+maGames = 2
+maTeamPts4 = pd.rolling_mean(teamdf.Pts4, maGames)
+maTeamPtsAg = pd.rolling_mean(teamdf.PtsAg, maGames)
+
+plt.figure('MatPlotLib Moving Average')
+ax1 = plt.subplot(2, 1, 1, title=("Points For "+str(maGames)+ " Game Moving Average"))
+plt.plot(maTeamPts4.index, maTeamPts4)
+plt.ylim(ymin=0)
+
+ax2 = plt.subplot(2, 1, 2, title=("Points Against " +str(maGames)+ " Game Moving Average"), sharex=ax1)
+plt.plot(maTeamPtsAg.index, maTeamPtsAg)
+plt.ylim(ymin=0)
+
+
+plt.figure('Seaborn KDE')
+#sns.distplot(teamdf.Pts4, hist=False, kde_kws={"shade": True})
+sns.kdeplot(teamdf.Pts4, bw=1, cut=40, shade=True, label=team)
+sns.kdeplot(df.Pts4, bw=1, shade=True, label='League Overall')
+#sns.kdeplot(teamdf.PtsAg, bw=1, cut=40, shade=True)
+
+
+
+plt.figure('Rugplot')
+sns.rugplot(teamdf.Pts4)
 
 
 
 
 
-
-
-
-#terminators = df[df.Team == 'Terminators']
-#terminators['Date'] = pd.to_datetime(terminators['Date'])
-#terminators = terminators.set_index('Date')
-#
-#daBears = df[df.Team == 'Da Bears']
-#daBears['Date'] = pd.to_datetime(daBears['Date'])
-#daBears = daBears.set_index('Date')
-#
-#
-#
-#fig1 = plt.figure()
-#ax1 = plt.subplot(2,1,1, title="Terminators Points For Histogram")
-#terminators.Pts4.plot(kind='hist', alpha=0.5, normed=True)
-#daBears.Pts4.plot(kind='hist', alpha=0.5, normed=True)
-#plt.legend(['Termiators', 'Da Bears'])
-#
-#
-#ax2 = plt.subplot(2,1,2, sharex=ax1, title="Terminators Points Against Histogram")
-#terminators.PtsAg.plot(kind='hist', alpha=0.5, normed=True)
-#daBears.PtsAg.plot(kind='hist', alpha=0.5, normed=True)
-#plt.legend(['Termiators', 'Da Bears'])
-#plt.show()
-#
-#
-#
-#maGames = 3
-#maTerminatorsPts4 = pd.rolling_mean(terminators.Pts4, maGames)
-#maDaBearsPts4 = pd.rolling_mean(daBears.Pts4, maGames)
-#
-#maTerminatorsPtsAg = pd.rolling_mean(terminators.PtsAg, maGames)
-#maDaBearsPtsAg = pd.rolling_mean(daBears.PtsAg, maGames)
-#
-#
-#
-#fig2 = plt.figure()
-#
-#ax1 = plt.subplot(2, 1, 1, title="Points For 3-Game Moving Average")
-#plt.plot(maTerminatorsPts4.index, maTerminatorsPts4)
-#plt.plot(maDaBearsPts4.index, maDaBearsPts4)
-#plt.legend(['Terminators', 'Da Bears'])
-#plt.ylim(ymin=0)
-#
-#ax2 = plt.subplot(2, 1, 2, title="Points Against 3-Game Moving Average")
-#plt.plot(maTerminatorsPtsAg.index, maTerminatorsPtsAg)
-#plt.plot(maDaBearsPtsAg.index, maDaBearsPtsAg)
-#plt.legend(['Terminators', 'Da Bears'])
-#plt.ylim(ymin=0)
-#plt.show()
+plt.show()

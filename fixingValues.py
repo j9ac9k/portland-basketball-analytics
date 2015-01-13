@@ -15,126 +15,117 @@ from collections import defaultdict
 df = pd.read_pickle('cleanerdf.pkl')
 
 print("Starting Unique Teams: " + str(len(df.Team.unique())))
-
-
-#Unique team Names)
-df['Team'] = df['Team'].str.lower()
-df['Opponent'] = df['Opponent'].str.lower()
-
-print("After 'str.lower()' Unique Teams: " + str(len(df.Team.unique())))
-
-teamCounter = defaultdict(int)
-for team in df.Team:
-    teamCounter[team] += 1
-    
-endConditions = (   '(thu)',
-                    '(thur)',
-                    '(wed)',
-                    '(mon)',
-                    '(tue)',
-                    '(sun)',
-                    '(sat)',
-                    '(inter)',
-                    '(wed) pd 370',
-                    '(no double header wkl)',
-                    '(game 3)',
-                    '(game 5)',
-                    '(scap)',
-                    '(scappoose)',
-                    '(8games)',
-                    '(8 games)',
-                    '(precision castparts)',
-                    '(intel)',
-                    '(asian)',
-                    '(p2p)',
-                    '(tdb)',
-                    '(msft)',
-                    '($60 joe)',
-                    '(60 cehck)',
-                    '(cash 60)',
-                    '(d level one game)',
-                    '(ordered jerseys)',
-                    '(game 3)',
-                    '($278 + release)',
-                    '($142)',
-                    '($346)',
-                    '(release + $346)',
-                    '(need 1 players)',
-                    '($364+relse)',
-                    '(release forms + $142)',
-                    '(check-48,196,48cash)',
-                    '(60 check)',
-                    '(68 check)',
-                    '($346+relse)',
-                    '(release + $340)',
-                    '($131 cash)'
-                    '(purvis)',
-                    '(actually cross',
-                    '(rec)',
-                    '(jerseys)',
+ 
+endConditions = (   '\(thu\)',
+                    '\(thur\)',
+                    '\(wed\)',
+                    '\(mon\)',
+                    '\(tue\)',
+                    '\(sun\)',
+                    '\(sat\)',
+                    '\(inter\)',
+                    '\(wed\) pd 370',
+                    '\(no double header wkl\)',
+                    '\(game 3\)',
+                    '\(game 5\)',
+                    '\(scap\)',
+                    '\(scappoose\)',
+                    '\(8games\)',
+                    '\(8 games\)',
+                    '\(precision castparts\)',
+                    '\(intel\)',
+                    '\(asian\)',
+                    '\(p2p\)',
+                    '\(tdb\)',
+                    '\(msft\)',
+                    '\($60 joe\)',
+                    '\(60 cehck\)',
+                    '\(cash 60\)',
+                    '\(d level one game\)',
+                    '\(ordered jerseys\)',
+                    '\(game 3\)',
+                    '\($278 + release\)',
+                    '\($142\)',
+                    '\($346\)',
+                    '\(release + $346\)',
+                    '\(need 1 players\)',
+                    '\($364+relse\)',
+                    '\(release forms + $142\)',
+                    '\(check-48,196,48cash\)',
+                    '\(60 check\)',
+                    '\(68 check\)',
+                    '\($346+relse\)',
+                    '\(release + $340\)',
+                    '\($131 cash\)'
+                    '\(purvis\)',
+                    '\(actually cross',
+                    '\(rec\)',
+                    '\(jerseys\)',
                     ' no show',
-                    '(wnt 2)no show. game made',
-                    '( win 1)',
-                    '(win 1)',
-                    '(win 2)',
-                    '(win2)',
-                    '(wint 1)',
-                    '(wint 2)',
-                    '(winter 1)',
-                    '(winter 2)',
-                    '(d) win 2',
-                    '(win 2) c',
-                    '(win 2) d',
-                    '(wnt 2)',
-                    '(tdb)',
-                    '(sum 2)',
-                    '(sum 1)',
-                    '(sum 2) d',
-                    '(sum1)',                 
-                    '(sum',
-                    '(sum2 + fall )',
-                    '(fall 1)',
-                    '(fall 2)',
-                    '(fall2)',
-                    '(e fall 2)',
-                    '(spr 1)',
-                    '(spr 2)',
-                    '(spring 2)',
-                    '(spring 2 )',
-                    '(spring 1)',
-                    '(spring1)',
-                    '(womens win 2)'
+                    '\(wnt 2\)no show. game made',
+                    '\( win 1\)',
+                    '\(win 1\)',
+                    '\(win 2\)',
+                    '\(win2\)',
+                    '\(wint 1\)',
+                    '\(wint 2\)',
+                    '\(winter 1\)',
+                    '\(winter 2\)',
+                    '\(d\) win 2',
+                    '\(win 2\) c',
+                    '\(win 2\) d',
+                    '\(wnt 2\)',
+                    '\(tdb\)',
+                    '\(sum 2\)',
+                    '\(sum 1\)',
+                    '\(sum 2\) d',
+                    '\(sum1\)',                 
+                    '\(sum',
+                    '\(sum2 + fall \)',
+                    '\(fall 1\)',
+                    '\(fall 2\)',
+                    '\(fall2\)',
+                    '\(e fall 2\)',
+                    '\(spr 1\)',
+                    '\(spr 2\)',
+                    '\(spring 2\)',
+                    '\(spring 2 \)',
+                    '\(spring 1\)',
+                    '\(spring1\)',
+                    '\(womens win 2\)'
                     '#2',
                     '#1',
                     '#4',
-                    '(comp)',
-                    '  1)',
-                    '  2)',
+                    '\(comp\)',
+                    '  1\)',
+                    '  2\)',
                     ' wed',
-                    '()',
-                    '(crosskix)',
-                    '(spring 1) e',
-                    '(win 2) e',
+                    '\(\)',
+                    '\(crosskix\)',
+                    '\(spring 1\) e',
+                    '\(win 2\) e',
                     '- plus p2p',
-                    '(pcc)',
-                    '(gbr)',
-                    '(sat) e',
-                    '(x-warriors)',
-                    '(need to contact sara)',
-                    '( no show first game. ma)',
-                    '(did shockers replace',
-                    '(d fall 2)',
+                    '\(pcc\)',
+                    '\(gbr\)',
+                    '\(sat\) e',
+                    '\(x-warriors\)',
+                    '\(need to contact sara\)',
+                    '\( no show first game. ma\)',
+                    '\(did shockers replace',
+                    '\(d fall 2\)',
                     ' champ game',
-                    '(sum2',
-                    '(tdb',
-                    '(dtb',
-                    '(346',
-                    ' (purvis',
+                    '\(sum2',
+                    '\(tdb',
+                    '\(dtb',
+                    '\(346',
+                    ' \(purvis',
                     ' sunday',
                     ' thursday',
-                    ' (sum',
-                    ' (release forms',
-                    ')'
+                    ' \(sum',
+                    ' \(release forms',
+                    ':\)',
+                    '\(no double header wk1\)'
+                    
                 )
                 
 middleConditions = ('no show first game',
@@ -157,43 +148,44 @@ startConditions = ('b- championship ',
                    'c #2',
                    'c #3',
                    'c #4',
-                   'c division championship game (',
+                   'c division championship game \(',
                   'coed #1 ',
                   'coed #2 ',
                   'coed #3 ',
                   'coed #4 ',
-                  'coed championship game (',
-                   'losers of 840pm(',
+                  'coed championship game \(',
+                   'losers of 840pm\(',
                     '# ',
-                    '#1 ',
-                    '#2 ',
-                    '#3 ',
-                    '#4 ',
-                    '#5 ',
-                    '#6 ',
-                    '#7 ',
-                    '#8 ',
-                    '#9 ',
-                    '#10 ',
-                    '#11 ',
-                    '#12 ',
-                    '#13 ',
-                    '#14 ',
-                    '#16 ',
-                    '#a1 ',
-                    '#a2 ',
-                    '#a3 ',
-                    '#a4 ',
-                    '#b1 ',
-                    '#b2 ',
-                    '#b3 ',
-                    '#b4 ',
-                    '#c1 ',
-                    '#c2 ',
-                    '#c3 ',
-                    '#c4 '
-                    '#10 ',
-                    '#11 ',
+                    '#1',
+                    '#2',
+                    '#3',
+                    '#4',
+                    '#5',
+                    '#6',
+                    '#7',
+                    '#8',
+                    '#9',
+                    '#10',
+                    '#11',
+                    '#12',
+                    '#13',
+                    '#14',
+                    '# 15',
+                    '#16',
+                    '#a1',
+                    '#a2',
+                    '#a3',
+                    '#a4',
+                    '#b1',
+                    '#b2',
+                    '#b3',
+                    '#b4',
+                    '#c1',
+                    '#c2',
+                    '#c3',
+                    '#c4',
+                    '#10',
+                    '#11',
                     'a #1',
                     'a #2',
                     'a #3',
@@ -205,7 +197,10 @@ startConditions = ('b- championship ',
                     'rec #1',
                     'rec #2',
                     'rec #3',
-                    'rec #4'
+                    'rec #4',
+                    '\(w 1\)',
+                    '\(w 2\)',
+                    '\(e \)'
                    )
                    
 teamNameReplacements = np.array([
@@ -265,7 +260,7 @@ teamNameReplacements = np.array([
                         ['kenny roasters', 'kennys roasters'],
                         ['kittleson  and  associates', 'kittelson  and  associates'],
                         ['knights fury indis', 'knights fury'],
-                        ['land sharks (not, apparently, a late joi', 'landsharks'],
+                        ['land sharks \(not, apparently, a late joi', 'landsharks'],
                         ['late joining team hot balls', 'hot balls'],
                         ['lawn duhs', 'lawn-duhs'],
                         ['lets 3s fly', 'let 3s fly'],
@@ -276,7 +271,7 @@ teamNameReplacements = np.array([
                         ['mac a team', 'mac aa team'],
                         ['mac- and cheese', 'mac-n-cheese'],
                         ['mac and cheese', 'mac-n-cheese'],
-                        ['maxim (twain-sunday team)', 'maxim'],
+                        ['maxim \(twain-sunday team\)', 'maxim'],
                         ['maxim (wed)', 'maxim'],
                         ['mba all stars', 'mba all-stars'],
                         ['mg 503', 'mg503'],
@@ -305,7 +300,7 @@ teamNameReplacements = np.array([
                         ['pearl indis', 'pearl indys'],
                         ['penetrate and finish ($346 + release)', 'penetrate and finish'],
                         ['pimps  and  ballers', 'pimps and ballers'],
-                        ['pimps and ballers(teamfiendship', 'pimps and ballers'],
+                        ['pimps and ballers\(teamfiendship', 'pimps and ballers'],
                         ['pineryderz', 'pineriders'],
                         ['pine riders', 'pineriders'],
                         ['plan b (release forms)', 'p[an b'],
@@ -319,21 +314,21 @@ teamNameReplacements = np.array([
                         ['rasheeds bald spot (sum)', 'rasheeds bald spot'],
                         ['ratchets', 'racket'],
                         ['#1 bosh.o', 'bosh.0'],
-                        ['2 bulldogs (no double header wk1', '2 bulldogs'],
+                        ['2 bulldogs \(no double header wk1', '2 bulldogs'],
                         ['5 - for - 5', '5-for-5'],
                         ['4 guys  and  a sub (wint 2)', '4 guys and a sub'],
                         ['54s the mike', '54s and the mike'],
-                        ['a division championship game ( mastercra', 'mastercraft'],
-                        ['mastercraft (sun)', 'mastercraft'],
-                        ['mastercraft (wed)', 'mastercraft'],
+                        ['a division championship game \( mastercra', 'mastercraft'],
+                        ['mastercraft \(sun\)', 'mastercraft'],
+                        ['mastercraft \(wed\)', 'mastercraft'],
                         ['mastercraft 1', 'mastercraft'],
                         ['mastercraft team 1', 'mastercraft'],
                         ['mastercraft team 2', 'mastercraft'],
                         ['mastercraft team a', 'mastercraft'],
                         ['mastercraft team b', 'mastercraft'],
-                        ['a division championship game (log jammin', 'log jammin'],
+                        ['a division championship game \(log jammin', 'log jammin'],
                         ['ak 47', 'ak47'],
-                        ['b division championship game ( boxers', 'boxers'],
+                        ['b division championship game \( boxers', 'boxers'],
                         ['zone thugs and harmony', 'zone thugz and harmony'],
                         ['trail-blazers', 'trail blazers'],
                         ['touch of gray', 'touch of grey'],
@@ -358,16 +353,22 @@ teamNameReplacements = np.array([
                         ['rodmans korean all-stars', 'rodmans korean all stars'],
                         ['robs real estate', 'robs real estate services'],
                         ['robinson', 'robinsons canby'],
-                        ['rec division champioinship game (yikes', 'yikes'],
-                        ['rec division champioinship game (litle g', 'little giants'],
-                        ['rec championship game (perf ins', 'performance insulation'],
-                        ['rec consolation game (raw dawgs', 'raw dawgs'],
+                        ['rec division champioinship game \(yikes', 'yikes'],
+                        ['rec division champioinship game \(litle g', 'little giants'],
+                        ['rec championship game \(perf ins', 'performance insulation'],
+                        ['rec consolation game \(raw dawgs', 'raw dawgs'],
                         ['ram rod no show. game made somehow. goo', 'ram rod'],
-                        ['penetrate and finish ($346 + release', 'penetrate and finish'],
-                        ['old ballz(pd 480', 'old ballz'],
+                        ['penetrate and finish \($346 + release', 'penetrate and finish'],
+                        ['old ballz\(pd 480', 'old ballz'],
                         ['old ballzers winner', 'old ballz'],            
-                        ['nw merck (gabes', 'nw merck'],
-                        ['north ballerz', 'northwest ballerz']
+                        ['nw merck \(gabes', 'nw merck'],
+                        ['north ballerz', 'northwest ballerz'],
+                        ['b division championship game \(se muddogs', 'se muddogs'],
+                        ['drazen ballhogovich s', 'drazen ballhogavichs'],
+                        ['bunch of beaches first game. ma', 'bunch of beaches'],
+                        ['bros wit no fros', 'bros with no fros'],
+                        ['bosh. o c', 'bosh.0']
+                        
                         ])
 
 teamToDelete = ('late joining team',
@@ -401,55 +402,91 @@ teamToDelete = ('late joining team',
 #df = df.reset_index(drop=True)      
 
 
-dfOriginal = df
-for i in df.index:
-    
-    df.Team[i] = ' '.join(df.loc[i, 'Team'].split())
-
-    teamName = df.loc[i, 'Team']    
-    for endCondition in endConditions:
-        if df.Team[i].endswith(endCondition):
-            df.Team[i] = teamName.replace(endCondition, '').strip()
-    
-    teamName = df.loc[i, 'Team']
-    for startCondition in startConditions:
-        if df.Team[i].startswith(startCondition):
-            df.Team[i] = teamName.replace(startCondition, '').strip()
-
-    teamName = df.loc[i, 'Team']
-    for middleCondition in middleConditions:
-        if middleCondition in teamName:
-            df.Team[i] = teamName.replace(middleCondition, '').strip()
-    
-    teamName = df.loc[i, 'Team']
-    for replacement in replacements:
-        if replacement[0] in teamName:
-            df.Team[i] = teamName.replace(replacement[0], replacement[1]).strip()
-    
-    teamName = df.loc[i, 'Team']                 
-    if teamName in teamNameReplacements[:, 0]:
-        df.Team[i] = teamNameReplacements[np.where(teamNameReplacements == teamName)[0], 1][0]
-           
-#    for j in df2.Team[df.Team.str.endswith(i)].index:
-#        df.Team[j] = df2.Team[j].replace(i, '').rstrip()
-#    for j in df2.Opponent[df.Opponent.str.endswith[i]].index:
-#        df.Opponent[j] = df2.Opponent[j].replace(i, '').rstrip()
+#dfOriginal = df
+#for i in df.index:
+#    
+#    df.Team[i] = ' '.join(df.loc[i, 'Team'].split())
+#
+#    teamName = df.loc[i, 'Team']    
+#    for endCondition in endConditions:
+#        if df.Team[i].endswith(endCondition):
+#            df.Team[i] = teamName.replace(endCondition, '').strip()
+#    
+#    teamName = df.loc[i, 'Team']
+#    for startCondition in startConditions:
+#        if df.Team[i].startswith(startCondition):
+#            df.Team[i] = teamName.replace(startCondition, '').strip()
+#
+#    teamName = df.loc[i, 'Team']
+#    for middleCondition in middleConditions:
+#        if middleCondition in teamName:
+#            df.Team[i] = teamName.replace(middleCondition, '').strip()
+#    
+#    teamName = df.loc[i, 'Team']
+#    for replacement in replacements:
+#        if replacement[0] in teamName:
+#            df.Team[i] = teamName.replace(replacement[0], replacement[1]).strip()
+#    
+#    teamName = df.loc[i, 'Team']                 
+#    if teamName in teamNameReplacements[:, 0]:
+#        df.Team[i] = teamNameReplacements[np.where(teamNameReplacements == teamName)[0], 1][0]
+#           
+##    for j in df2.Team[df.Team.str.endswith(i)].index:
+##        df.Team[j] = df2.Team[j].replace(i, '').rstrip()
+##    for j in df2.Opponent[df.Opponent.str.endswith[i]].index:
+##        df.Opponent[j] = df2.Opponent[j].replace(i, '').rstrip()
         
 
-    
-    
 
-print("After removing days from end of team names " + str(len(df.Team.unique())))
-uniqueTeams = list(df.Team.unique())
 
+Team = df.Team
+
+df2 = df
+
+# removing excess spaces
+Team = Team.str.replace('  ', ' ')
+print("After removaing excess spaces: " + str(len(Team.unique())))
+
+# placing in lower case
+Team = Team.str.lower()
+print("After converting to lower case: " + str(len(Team.unique())))
+
+
+for i in endConditions:
+    Team = Team.str.replace(i, '')
+print("After End Condition Removal: " + str(len(Team.unique())))
+
+
+for i in startConditions:  
+    Team = Team.str.replace(i, '')
+print("After Start Condition Removal: " + str(len(Team.unique())))
+
+for i in middleConditions:
+    Team = Team.str.replace(i, ' ')
+print("After Removing Middle Conditions: " + str(len(Team.unique())))
+
+# removing excess spaces
+Team = Team.str.replace('  ', ' ')
+print("After removaing excess spaces: " + str(len(Team.unique())))
+
+
+for i in Team.index:
+    if Team.get(i) in teamNameReplacements[:, 0].tolist():
+        for j in teamNameReplacements[:, 0].tolist():
+            if Team[i] == j:
+                Team[i] = teamNameReplacements[np.where(teamNameReplacements == j)[0], 1][0]
+
+
+print('After finishing replacement loop: ' + str(len(Team.unique())))
+
+Team = Team.str.replace('\(\)', '')
+Team = Team.str.strip()
+
+
+print('\nAll Done: ' + str(len(Team.unique())))
+uniqueTeams = list(Team.unique())
+
+    
 teamCounter = defaultdict(int)
 for team in df.Team:
     teamCounter[team] += 1
-
-#for i in df.index:
-#    df.Team[i] = df.Team[i].rstrip('(thu)')
-    
-#teamCounter2 = defaultdict(int)
-#for team in df.Team:
-#    teamCounter2[team] += 1
-#    

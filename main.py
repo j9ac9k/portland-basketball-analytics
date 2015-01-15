@@ -7,16 +7,21 @@ import matplotlib.pyplot as plt
 #from matplotlib.dates import date2num
 import seaborn as sns
 
+
+
 plt.close('all')
 
 sns.set_palette("deep", desat=.6)
 sns.set_context(rc={"figure.figsize": (8, 4)})
 
-#importing the cleaner data field
-df = pd.read_pickle('cleanerdf.pkl')
+
+df = pd.read_pickle('cleaner2df.pkl')
 
 
-team = 'Nobody'
+df = df.sort('Date')
+
+
+team = 'corbett fish house'
 teamdf = df[df.Team == team]
 teamdf = teamdf.set_index('Date')
 
@@ -59,8 +64,8 @@ plt.ylim(ymin=0)
 
 plt.figure('Seaborn KDE')
 #sns.distplot(teamdf.Pts4, hist=False, kde_kws={"shade": True})
-sns.kdeplot(teamdf.Pts4, bw=1, cut=40, shade=True, label=team)
-sns.kdeplot(df.Pts4, bw=1, shade=True, label='League Overall')
+sns.kdeplot(teamdf.Pts4, bw=.4, cut=40, shade=True, label=team)
+#sns.kdeplot(df.Pts4, bw=1, shade=True, label='League Overall')
 #sns.kdeplot(teamdf.PtsAg, bw=1, cut=40, shade=True)
 
 

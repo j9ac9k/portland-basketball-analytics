@@ -143,23 +143,7 @@ wrongDate = df['Date'] == '0000-00-00'
 print('After removing duplicate entries with 1 bad date entry: ' + str(len(df[wrongDate])))    
 
 
-## Is there an opposite entry of the same game with a good date?
-#df = findOpposite(df)
-#df = df.reset_index(drop=True)
-#wrongDate = df['Date'] == '0000-00-00'
-#print('After seeking opposite entry with correct date: ' + str(len(df[wrongDate])))    
-#
-#
-#df = gameBeforeOrAfter(df)
-#df = df.reset_index(drop=True)
-#wrongDate = df['Date'] == '0000-00-00'
-#print('After seeking games week before and after: ' + str(len(df[wrongDate]))) 
-#
-
-
 df['Date'] = pd.to_datetime(df['Date'])
-
-
 
 
 df.to_pickle('cleanerdf.pkl')

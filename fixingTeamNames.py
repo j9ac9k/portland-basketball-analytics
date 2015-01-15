@@ -662,7 +662,6 @@ def filter(Team, removeConditions, middleConditions):
     for i in middleConditions:
         Team = Team.str.replace(i, ' ')
        
-    
     Team = Team.str.replace('  ', ' ')
     Team = Team.str.replace('\(\)', '')
     Team = Team.str.strip()
@@ -689,12 +688,27 @@ df['Opponent'] = filter(Opponent, removeConditions, middleConditions)
 
 df = df[~df.Team.str.contains('grade boys')]
 df = df[~df.Team.str.contains('grade girls')]
-df = df[~df.Team.str.contains('connor s team')]
-df = df[~df.Team.str.contains('scott murphy')]
-df = df[~df.Team.str.contains('es goons')]
-df = df[~df.Opponent.str.contains('sccs finest')]
-df = df[~df.Opponent.str.contains('team wilson')]
-df = df[~df.Opponent.str.contains('valley athletics')]
+df = df[~(df.Team == 'connor s team')]
+df = df[~(df.Team == 'scott murphy')]
+df = df[~(df.Team == 'es goons')]
+df = df[~(df.Opponent == 'sccs finest')]
+df = df[~(df.Opponent == 'team wilson')]
+df = df[~(df.Opponent == 'valley athletics')]
+
+
+df = df[~(df.Season == 'Intel League')]
+df = df[~(df.Season =='Womens Spring 2 2012')]
+
+df.loc[df['Season'] == 'Wednesday Spring 2 2012', 'Season'] = 'Spring 2 2012'
+df.loc[df['Season'] == 'Womens Spring 2 2012', 'Season'] = 'Spring 2 2012'
+
+df.loc[df['Season'] == 'Summer 1', 'Season'] = 'Summer 1 2013'
+df.loc[df['Season'] == 'Summer 2', 'Season'] = 'Summer 2 2013'
+
+df = df[~(df.Season == 'Pro- AM 2012')]
+
+
+df = df.reset_index(drop=True)
 
 
 uniqueTeams = sorted(df.Team.unique())
@@ -709,6 +723,10 @@ opponentCounter = defaultdict(int)
 for opponent in df.Opponent:
     opponentCounter[opponent] += 1
     
+difference = []
+for opponent in uniqueOpponents:
+    if not opponentCounter[opponent] == teamCounter[opponent]:
+        difference.append(abs(opponentCounter[opponent] - teamCounter[opponent]))
 
 
 df.to_pickle('cleaner2df.pkl')

@@ -243,7 +243,7 @@ teamNameReplacements = np.array([
                         ['has-beens', 'has beens'],
                         ['hdwe', 'hdwe ballaholics'],
                         ['houston comet', 'houston comets'],
-                        ['j-j-j jadams', 'j-j-j-jadams'],
+                        ['j-j-j jadams', 'pick to play j-j-j jadams'],
                         ['jail blazers', 'jailblazers'],
                         ['jenny craig save my life', 'jenny craig saved my life'],
                         ['jesse and rippers', 'jesse and the rippers'],
@@ -643,11 +643,75 @@ teamNameReplacements = np.array([
                         ['mcelroy s team', 'mcelroys team'],
                         ['podunk ballers', 'podunk 2.0'],
                         ['the newborn nabarlek ($346 + release)', 'the newborn nabarlek'],
-                        ['up town hoyas', 'uptown hoyas']
-                        
-                        
-                        ])
+                        ['up town hoyas', 'uptown hoyas'],
+                        ['pick to eastside', 'pick to play eastside'],
+                        ['pick to play ballin', 'pick to play ballers'],
+                        ['pick to play beaverton(became standard t', 'pick to play beaverton'],
+                        ['p2p ballerz', 'pick to play ballers'],
+                        ['p2p co-ed 2', 'pick to play co-ed'],
+                        ['p2p co-ed 1', 'pick to play co-ed'],
+                        ['p2p duilio', 'pick to play duilio'],
+                        ['duilio cyclones', 'pick to play duilios cyclones'],
+                        ['p2p earlybirds', 'pick top play earlybirds'],
+                        ['p2p rebels', 'pick to play rebels'],
+                        ['p2p rebels 1', 'pick to play rebels'],
+                        ['pick to play co-ed team', 'pick to play co-ed'],
+                        ['pick to play coed', 'pick to play co-ed'],
+                        ['duilios cyclones', 'pick to play duilios cyclones'],
+                        ['duilios cyclones p2p', 'pick to play duilios cyclones'],
+                        ['p2p duilios cyclones', 'pick to play duilios cyclones'],
+                        ['pick to play elite ballers', 'pick to play elite'],
+                        ['meetup porltandbasketball', 'pick to play meetup'],
+                        ['pick to play meet up', 'pick to play meetup'],
+                        ['pick to playelite', 'pick to play elite'],
+                        ['pick-to-play clackamas', 'pick to play clackamas'],
+                        ['picke to play', 'pick to play'],
+                        ['picktoplay elite', 'pick to play elite'],
+                        ['rebels-p2p', 'pick to play rebels'],
+                        ['the rebels p2p', 'pick to play rebels'],
+                        ['nobody+p2p', 'nobody'],
+                        ['p2p', 'pick to play'],
+                        ['p2p old dogs', 'pick to play old dogs'],
+                        ['p2p brand new', 'pick to play'],
+                        ['coed p2p', 'pick to play co-ed'],
+                        ['pick to play revenge game', 'pick to play referee revenge'],
+                        ['referee revenge', 'pick to play referee revenge'],
+                        ['refs revenge', 'pick to play referee revenge'],
+                        ['refs revenge 2', 'pick to play referee revenge'],
+                        ['p2p eastsiders', 'pick to play eastsider'],
+                        ['tanyas vancouver picktoplayers', 'pick to play vancouver'],
+                        ['pickto play downtown', 'pick to play downtown'],
+                        ['rec championship game (rose city )', 'rose city'],
+                        ['eastsiders (men s)', 'eastsiders'],
+                        ['evergreen engineers(trey treys)', 'treys treys treys'],
+                        ['hai pham', 'hai phan'],
+                        ['hillside hobbits (5)', 'hillside'],
+                        ['monstars (team brian terletzky )', 'monstars'],
+                        ['team brian terletzky', 'monstars'],
+                        ['multnomah university (womens)', 'multnomah university'],
+                        ['pdx (womens win 2)', 'pdx'],
+                        ['roth starts (pick to play)', 'roths team'],
+                        ['roth s stars (pick to play)', 'roths team'],
+                        ['roths stars (pick to play)', 'roths team'],
+                        ['team awesome & arthur', 'team awesome'],
+                        ['team awesome check (476)', 'team awesome'],
+                        ['twine twicklers', 'twine ticklers'],
+                        ['washed up (banks)', 'banks'],
+                        ['priority payment systems', 'priority payments'],
+                        ['rebels veterans & 3j s', 'rebels veterans'],
+                        ['the sharks)', 'the sharks'],
+                        ['all day(pick to play)', 'pick to play all day'],
+                        ['jv2 (swoobs)', 'swoobs'],
+                        ['referee revenge p2p', 'pick to play referee revenge'],
+                        ['women s pick to play', 'pick to play women'],
+                        ['pick to play eastside', 'pick to play eastsiders'],
+                        ['pick to play duilio', 'pick to play duilios cyclones'],
+                        ['pick to play early birds', 'pick to play earlybirds'],
+                        ['pick to play eastsider', 'pick to play eastsiders'],
+                        ['we r pick to play', 'we r'],
+                        ['pick to play east', 'pick to play eastsiders']
 
+                        ])
 
 Team = df.Team
 Opponent = df.Opponent
@@ -668,18 +732,21 @@ def filter(Team, removeConditions, middleConditions):
     
     for problem_name, replacement_name in zip(teamNameReplacements[:, 0].tolist(), teamNameReplacements[:, 1].tolist()):
         Team[Team == problem_name] = replacement_name
-    
-    
+        
     Team = Team.str.replace('  ', ' ')
     Team = Team.str.replace('\(\)', '')
     Team = Team.str.strip()
-
-       
-    teamCounter = defaultdict(int)
-    for team in Team:
-        teamCounter[team] += 1
         
     return Team
+
+def repopulateEntries(df):
+        
+    for team in df.Team.unique():
+        pass
+    
+    
+    return df
+
 
 
 df['Team'] = filter(Team, removeConditions, middleConditions)
@@ -688,14 +755,13 @@ df['Opponent'] = filter(Opponent, removeConditions, middleConditions)
 
 df = df[~df.Team.str.contains('grade boys')]
 df = df[~df.Team.str.contains('grade girls')]
-df = df[~(df.Team == 'connor s team')]
+df = df[~(df.Team == 'connor s team pdx')]
 df = df[~(df.Team == 'scott murphy')]
-df = df[~(df.Team == 'es goons')]
+df = df[~(df.Team == 'es goons (tacoma)')]
 df = df[~(df.Opponent == 'sccs finest')]
 df = df[~(df.Opponent == 'team wilson')]
 df = df[~(df.Opponent == 'valley athletics')]
-
-
+df = df[~(df.Team == 'filipino playoffs')]
 df = df[~(df.Season == 'Intel League')]
 df = df[~(df.Season =='Womens Spring 2 2012')]
 
@@ -706,27 +772,47 @@ df.loc[df['Season'] == 'Summer 1', 'Season'] = 'Summer 1 2013'
 df.loc[df['Season'] == 'Summer 2', 'Season'] = 'Summer 2 2013'
 
 df = df[~(df.Season == 'Pro- AM 2012')]
-
-
+df = df[~((df.Team == '') | (df.Opponent == ''))]
 df = df.reset_index(drop=True)
 
 
+
+
 uniqueTeams = sorted(df.Team.unique())
+uniqueOpponents = sorted(df.Opponent.unique())
 
 teamCounter = defaultdict(int)
 for team in df.Team:
     teamCounter[team] += 1
     
-uniqueOpponents = sorted(df.Opponent.unique())
-
 opponentCounter = defaultdict(int)
 for opponent in df.Opponent:
     opponentCounter[opponent] += 1
     
+print("Teams not in Opponents")
+for team in uniqueTeams:
+    if team not in uniqueOpponents:
+        print(team)
+
+print("\nOpponents not in Teams")
+for opponent in uniqueOpponents:
+    if opponent not in uniqueTeams:
+        print(opponent)
+
 difference = []
 for opponent in uniqueOpponents:
     if not opponentCounter[opponent] == teamCounter[opponent]:
         difference.append(abs(opponentCounter[opponent] - teamCounter[opponent]))
+
+### Cleaning the Locations Field
+df.Location = df.Location.str.replace('@', '')
+df.Location = df.Location.str.strip()
+
+
+
+
+
+
 
 
 df.to_pickle('cleaner2df.pkl')

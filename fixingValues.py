@@ -225,7 +225,7 @@ teamNameReplacements = np.array([
                         ['club pdx', 'club portland'],
                         ['croations united', 'croatians united'],
                         ['drazen ballhogaviches', 'drazen ballhogavichs'],
-                        ['eary birds', 'early birds'],
+                        ['eary birds', 'pick to play earlybirds'],
                         ['elite electric group', 'elite electric'],
                         ['expanison', 'expansion'],
                         ['expansion part 2', 'expansion part deux'],
@@ -243,7 +243,7 @@ teamNameReplacements = np.array([
                         ['has-beens', 'has beens'],
                         ['hdwe', 'hdwe ballaholics'],
                         ['houston comet', 'houston comets'],
-                        ['j-j-j jadams', 'j-j-j-jadams'],
+                        ['j-j-j jadams', 'pick to play j-j-j-jadams'],
                         ['jail blazers', 'jailblazers'],
                         ['jenny craig save my life', 'jenny craig saved my life'],
                         ['jesse and rippers', 'jesse and the rippers'],
@@ -643,9 +643,30 @@ teamNameReplacements = np.array([
                         ['mcelroy s team', 'mcelroys team'],
                         ['podunk ballers', 'podunk 2.0'],
                         ['the newborn nabarlek ($346 + release)', 'the newborn nabarlek'],
-                        ['up town hoyas', 'uptown hoyas']
-                        
-                        
+                        ['up town hoyas', 'uptown hoyas'],
+                        ['pick to eastside', 'pick to play eastside'],
+                        ['pick to play ballin', 'pick to play ballers'],
+                        ['pick to play beaverton(became standard t', 'pick to play beaverton'],
+                        ['p2p ballerz', 'pick to play ballers'],
+                        ['p2p co-ed 2', 'pick to play co-ed'],
+                        ['p2p co-ed 1', 'pick to play co-ed'],
+                        ['p2p duilio', 'pick to play duilio'],
+                        ['duilio cyclones', 'pick to play duilios cyclones'],
+                        ['p2p earlybirds', 'pick top play earlybirds'],
+                        ['p2p rebels', 'pick to play rebels'],
+                        ['p2p rebels 1', 'pick to play rebels'],
+                        ['pick to play co-ed team', 'pick to play co-ed'],
+                        ['pick to play coed', 'pick to play co-ed'],
+                        ['duilios cyclones', 'pick to play duilios cyclones'],
+                        ['duilios cyclones p2p', 'pick to play duilios cyclones'],
+                        ['p2p duilios cyclones', 'pick to play duilios cyclones'],
+                        ['pick to play elite ballers', 'pick to play elite'],
+                        ['meetup porltandbasketball', 'pick to play meetup'],
+                        ['pick to play meet up', 'pick to play meetup']
+                        ['pick to playelite', 'pick to play elite'],
+                        ['pick-to-play clackamas', 'pick to play clackamas'],
+                        ['picke to play', 'pick to play'],
+                        ['picktoplay elite', 'pick to play elite']
                         ])
 
 

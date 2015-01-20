@@ -102,33 +102,19 @@ df = df.drop_duplicates()
 #df = df.drop('Diff', 1)
 
 # removing entries with meaningless data
-df = df[~df['Week'].str.contains('week')]
-
-# removing pick to play games
-df = df[~df['Team'].str.contains('to play')]
-df = df[~df['Opponent'].str.contains('to play')]
-
-df = df[~df['Team'].str.contains('to Play')]
-df = df[~df['Opponent'].str.contains('to Play')]
-
-df = df[~df['Team'].str.contains('P2P')]
-df = df[~df['Opponent'].str.contains('P2P')]
+df = df[~(df['Week'] == 'week')]
 
 # removing games with no recorded score
 df = df.rename(columns={'Pts 4': 'Pts4', 'Pts Ag': 'PtsAg'})
-df = df[~(df.Pts4 == 0)]
-df = df[~(df.PtsAg == 0)]
+df = df[~((df.Pts4 == 0) | (df.PtsAg == 0))]
 
 # removing youth games...
-df = df[~df.Team.str.contains('Youth')]
-df = df[~df.Opponent.str.contains('Youth')]
-
-df = df[~df.Team.str.contains('youth')]
-df = df[~df.Opponent.str.contains('youth')]
+df = df[~(df.Team.str.contains('Youth') | df.Opponent.str.contains('Youth'))]
+df = df[~(df.Team.str.contains('youth') | df.Opponent.str.contains('youth'))]
 
 # removing no-shows...
-df = df[~df.Team.str.contains('no show')]
-df = df[~df.Opponent.str.contains('no show')]
+df = df[~(df.Team.str.contains('no show') | (df.Opponent.str.contains('no show')))]
+
 
 # Resetting Index...
 df = df.reset_index(drop=True)    

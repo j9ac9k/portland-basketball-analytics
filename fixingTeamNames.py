@@ -709,8 +709,9 @@ teamNameReplacements = np.array([
                         ['pick to play early birds', 'pick to play earlybirds'],
                         ['pick to play eastsider', 'pick to play eastsiders'],
                         ['we r pick to play', 'we r'],
-                        ['pick to play east', 'pick to play eastsiders']
-
+                        ['pick to play east', 'pick to play eastsiders'],
+                        ['willie filipino all stars', 'crosskix'],
+                        ['willies team', 'crosskix']
                         ])
 
 Team = df.Team
